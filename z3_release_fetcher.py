@@ -1013,7 +1013,9 @@ def package_plugin(plugin_version, z3_version, z3_releases):
         print('  Generated %s.' % (filename))
 
         # Launch maven to build repository
-        subprocess.call(['mvn', 'clean', 'verify'])
+        mvn_result = subprocess.call(['mvn', 'clean', 'verify'])
+        if (mvn_result != 0):
+            sys.exit(mvn_result)
 
         # Commit/push this repository
         try:
