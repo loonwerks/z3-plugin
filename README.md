@@ -20,7 +20,7 @@ The presently supported versions are:
 
 All of the steps necessary to fetch updated versions of Z3 Prover,
 package into Eclipse plugins, and deploy these as an Eclipse P2 update
-site are codified in the Python script `ze_release_fetcher.py` in the
+site are codified in the Python script `z3_release_fetcher.py` in the
 root directory of this repository.
 
 Further, a Travis CI configuration `.travis.yml` is used to
