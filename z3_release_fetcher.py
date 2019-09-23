@@ -1148,26 +1148,32 @@ def main(argv=None): # IGNORE:C0111
         prover_repository = gh.repository(Z3_PROVER_OWNER, Z3_PROVER_REPO)
         z3_releases = [r for r in prover_repository.releases()]
         z3_versions = [r.tag_name for r in z3_releases]
+        print('Z3 all versions: %s' % (pformat(z3_versions)))
 
         plugin_repository = gh.repository(Z3_PLUGIN_OWNER, Z3_PLUGIN_REPO)
         extant_plugin_versions = [r.tag_name for r in plugin_repository.releases()]
+        print('Extant plugin versions: %s' % (pformat(extant_plugin_versions)))
 
         # filter out the versions matching the exclude pattern
         if expattern:
             regex = re.compile(expattern)
             z3_versions = [x for x in filter(lambda x: not regex.match(x), z3_versions)]
+        print('Z3 versions after exclude: %s' % (pformat(z3_versions)))
 
         # filter on include pattern
         if inpattern:
             regex = re.compile(inpattern)
             z3_versions = [x for x in filter(regex.match, z3_versions)]
+        print('Z3 versions after include: %s' % (pformat(z3_versions)))
 
         # Find the plugin version corresponding to the z3-version
         regex = re.compile(r'\d+\.\d+\.\d+')
         plugin_versions = {regex.search(x).group(0) : x for x in filter(regex.search, z3_versions)}
+        print('Plugin versions matching Z3 versions: %s' % (pformat(plugin_versions)))
 
         # remove the versions already packaged as plugin
         plugin_versions = {v : plugin_versions[v] for v in filter(lambda x: (not x in extant_plugin_versions), plugin_versions)}
+        print('Plugin versions already packaged: %s' % (pformat(plugin_versions)))
 
         build_order = sorted(plugin_versions.keys())
         print('Building plugin versions: %s' % (pformat(build_order)))
