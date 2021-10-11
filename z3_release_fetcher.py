@@ -912,7 +912,7 @@ def package_plugin(plugin_version, z3_version, z3_releases):
         # Download and unpack binaries into binaries dir
         with tempfile.TemporaryDirectory() as temp_dir:
             binaries_dir = os.path.join(LINUX_PACKAGE_DIR, 'binaries')
-            asset = get_asset(release_assets_by_name, 'x64-ubuntu')
+            asset = get_asset(release_assets_by_name, 'x64-glibc-2.31')
             try:
                 removed_elements = gitrepo.index.remove([binaries_dir], True, r=True)
                 print('  Previous binaries removed from git: %s' % (pformat(removed_elements)))
